@@ -33,7 +33,9 @@
                 <li class=<?=strpos($file, ".mp3") ? "mp3item" : "playlistitem"?>>
                     <a href="<?=strpos($file, ".txt") ? 'music.php?playlist='.$file : 'songs/' . $file?>">
                         <?=$file?>
-                        (<?=filesize($dir . $file);?> b)
+                        <?php if(file_exists($dir. $file)):?>
+                            (<?=filesize($dir . $file);?> b)
+                        <?php endif;?>
                     </a>
                 </li>
             <?php endif;?>
