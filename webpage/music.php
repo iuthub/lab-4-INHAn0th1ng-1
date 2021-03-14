@@ -1,6 +1,11 @@
 <?php
     $dir = "./songs/";
     $files = scandir($dir);
+    $selected_playlist = isset($_REQUEST['playlist']) ? $_REQUEST['playlist']: null;
+    if($selected_playlist) {
+        $lines = file_get_contents('./songs/' . $selected_playlist);
+        $files = explode("\n", $lines);
+    }
     echo "<pre>";
     print_r($files);
     echo "</pre>";
@@ -16,7 +21,7 @@
 </head>
 <body>
 <div id="header">
-    <h1>190M Music Playlist Viewer</h1>
+    <h1><?=$selected_playlist?> Playlist Viewer</h1>
     <h2>Search Through Your Playlists and Music</h2>
 </div>
 
@@ -26,7 +31,7 @@
         <?php foreach($files as $file): ?>
             <?php if(!in_array($file, array(".", ".."))):?>
                 <li class=<?=strpos($file, ".mp3") ? "mp3item" : "playlistitem"?>>
-                    <a href="songs/<?=$file?>">
+                    <a href="<?=strpos($file, ".txt") ? 'music.php?playlist='.$file : 'songs/' . $file?>">
                         <?=$file?>
                         (<?=filesize($dir . $file);?> b)
                     </a>
