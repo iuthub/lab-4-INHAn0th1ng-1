@@ -1,10 +1,13 @@
 <?php
     $dir = "./songs/";
     $files = scandir($dir);
+    $playlist_name = "";
     $selected_playlist = isset($_REQUEST['playlist']) ? $_REQUEST['playlist']: null;
+
     if($selected_playlist) {
         $lines = file_get_contents('./songs/' . $selected_playlist);
         $files = explode("\n", $lines);
+        $playlist_name = ucfirst(substr($selected_playlist, 0, strpos($selected_playlist, ".")));
     }
     echo "<pre>";
     print_r($files);
@@ -21,7 +24,7 @@
 </head>
 <body>
 <div id="header">
-    <h1><?=$selected_playlist?> Playlist Viewer</h1>
+    <h1><?=$playlist_name?> Playlist Viewer</h1>
     <h2>Search Through Your Playlists and Music</h2>
 </div>
 
